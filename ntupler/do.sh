@@ -1,6 +1,6 @@
 # mc23c
 plant.py -m /eos/user/h/htsoi/MxAODs/mc23c -i user.htsoi.TauID.601191.PhPy8EG_AZNLO_Ztautau_vmc23c_output.root -s /eos/user/h/htsoi/MxAODs/ntuples/mc23c/Ztautau_PhPy --truth --rnnscore
-plant.py -m /eos/user/h/htsoi/MxAODs/mc23c -i user.htsoi.TauID.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep_vmc23c_output.root -s /eos/user/h/htsoi/MxAODs/ntuples/mc23c/ttbar --truth --rnnscore
+plant.py -m /eos/user/h/htsoi/MxAODs/mc23c -i user.htsoi.TauID.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep_vmc23c_output.root -s /eos/user/h/htsoi/MxAODs/ntuples/mc23c/ttbar --truth --rnnscore #--n-sliceSample 4 --n-slicePosition 0
 plant.py -m /eos/user/h/htsoi/MxAODs/mc23c -i user.htsoi.TauID.700794.Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto_vmc23c_output.root -s /eos/user/h/htsoi/MxAODs/ntuples/mc23c/Ztautau_sherpa --truth --rnnscore
 plant.py -m /eos/user/h/htsoi/MxAODs/mc23c -i user.htsoi.TauID.801002.Py8EG_A14NNPDF23LO_Gammatautau_MassWeight_vmc23c_output.root -s /eos/user/h/htsoi/MxAODs/ntuples/mc23c/Gtautau --truth --rnnscore
 plant.py -m /eos/user/h/htsoi/MxAODs/mc23c -i user.htsoi.TauID.801166.Py8EG_A14NNPDF23LO_jj_JZ1_vmc23c_output.root -s /eos/user/h/htsoi/MxAODs/ntuples/mc23c/JZ1 --truth --rnnscore
