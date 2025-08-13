@@ -1,0 +1,119 @@
+batch_size: 50000
+tree_name: 'tautree'
+
+input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/mc23c/ttbar
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu140/Gtautau
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu140/Ztautau_sherpa
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu140/Ztautau_PyPh
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu140/JZ1
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu140/JZ2
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu200/JZ3
+#input_folder: /Users/hofungtsoi/Desktop/gntau-train/ntuples/pu140/JZ4
+
+output:
+  output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/mc23c/ttbar.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu140/Gtautau.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu140/Ztautau_sherpa.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu140/Ztautau_PyPh.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu140/JZ1.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu140/JZ2.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu200/JZ3.h5
+  #output_name: /Users/hofungtsoi/Desktop/gntau-train/H5/raw/pu140/JZ4.h5
+  n_jets: -1 # -1 for all jets
+  max_tracks: 30
+  max_cells: 20
+  include_sample_info: True
+  shuffle_array: False
+
+sample_info:
+  Gtautau: 0
+  JZ1: 1
+  JZ2: 2
+  JZ3: 3
+  JZ4: 4
+  ttbar: 5
+  Ztautau_sherpa: 6
+  Ztautau_PyPh: 7
+
+variables:
+  jet_variables:
+    - "TauJets.mcEventNumber"
+    - "TauJets.mcChannelNumber"
+    - "TauJets.mcEventWeight"
+    - "TauJets.nTracks"
+    - "TauJets.nTracksIsolation"
+    - "TauJets.pt"
+    - "TauJets.eta"
+    - "TauJets.phi"
+    - "TauJets.ptJetSeed"
+    - "TauJets.etaJetSeed"
+    - "TauJets.phiJetSeed"
+    # - "TauJets.OldRNNJetScore"
+    - "TauJets.RNNJetScore"
+    - "TauJets.GNTauScore"
+    # - "TauJets.OldRNNJetScoreSigTrans"
+    - "TauJets.RNNJetScoreSigTrans"
+    - "TauJets.GNTauScoreSigTrans"
+    - "TauJets.Offline_RNNJetScore"
+    - "TauJets.Offline_RNNJetScoreSigTrans"
+    - "TauJets.truthProng"
+    - "TauJets.truthEtaVis"
+    - "TauJets.truthPtVis"
+    - "TauJets.IsTruthMatched"
+    - "TauJets.IsHadronicTau"
+    - "TauJets.truthDecayMode"
+    - "TauJets.truthRdecay"
+    # - "TauJets.truthRprod" # THOR didnt dumpt this due to unknown reason
+    - "TauJets.mu"
+    - "TauJets.nVtxPU"
+    - "TauJets.centFrac"
+    - "TauJets.isolFrac"
+    - "TauJets.EMPOverTrkSysP"
+    - "TauJets.innerTrkAvgDist"
+    - "TauJets.ptRatioEflowApprox"
+    - "TauJets.dRmax"
+    - "TauJets.trFlightPathSig"
+    - "TauJets.mEflowApprox"
+    - "TauJets.SumPtTrkFrac"
+    - "TauJets.absipSigLeadTrk"
+    - "TauJets.massTrkSys"
+    - "TauJets.etOverPtLeadTrk"
+    - "TauJets.ptDetectorAxis"
+    - "TauJets.ptFinalCalib"
+    # - "TauJets.truthOriginPdgId"
+
+  track_variables:
+    - "TauTracks.pt"
+    - "TauTracks.eta"
+    - "TauTracks.phi"
+    - "TauTracks.dEta"
+    - "TauTracks.dPhi"
+    - "TauTracks.z0sinthetaTJVA"
+    - "TauTracks.z0sinthetaSigTJVA"
+    - "TauTracks.d0TJVA"
+    - "TauTracks.d0SigTJVA"
+    - "TauTracks.nInnermostPixelHits"
+    - "TauTracks.expectInnermostPixelLayerHit"
+    - "TauTracks.nIBLHitsAndExp"
+    - "TauTracks.nPixelHits"
+    - "TauTracks.nPixelHitsPlusDeadSensors"
+    - "TauTracks.nSCTHits"
+    - "TauTracks.nSCTHitsPlusDeadSensors"
+    #- "TauTracks.chargedScoreRNN"
+    #- "TauTracks.isolationScoreRNN"
+    #- "TauTracks.conversionScoreRNN"
+    #- "TauTracks.fakeScoreRNN"
+
+  cell_variables:
+    - "TauClusters.e"
+    - "TauClusters.et"
+    - "TauClusters.eta"
+    - "TauClusters.phi"
+    - "TauClusters.dEta"
+    - "TauClusters.dPhi"
+    - "TauClusters.SECOND_R"
+    - "TauClusters.CENTER_LAMBDA"
+    - "TauClusters.SECOND_LAMBDA"
+    - "TauClusters.CENTER_MAG"
+    - "TauClusters.FIRST_ENG_DENS"
+    - "TauClusters.EM_PROBABILITY"
