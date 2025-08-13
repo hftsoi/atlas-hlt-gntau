@@ -36,4 +36,4 @@ python ntup_to_h5.py --config ntup_to_h5_config.yaml
 ```
 adapt using scripts in ntup_to_h5 folder here
 - comment out irrelevant/unavailable variables and change paths in `ntup_to_h5_config.yaml`
-- note the invalid cells/tracks are padded with np.nan according to the last variable in the corresponding list (to avoid padding the valid ones as well)
+- note the invalid cells/tracks are padded with np.nan according to the last variable in the corresponding list (to avoid padding the valid ones as well). e.g. `TauTracks.fakeScoreRNN` and etc. should be commented out since these are all nan
