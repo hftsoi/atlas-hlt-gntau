@@ -28,3 +28,12 @@ plant.py -m [path to MxAOD] -i [path to sample] -s [path to output] --truth --rn
 adapt using scripts in ntupler folder here
 - comment out irrelevant/unavailable variables in `constructor.cxx` and `constructor.h`, such as `m_truthParticleOrigin`
 - output ntuple in `output_path/data-ANALYSIS/`
+
+## ntup_to_h5
+convert ntuple to h5 file, source repo at https://gitlab.cern.ch/asudhaka/online-tau-id
+```
+python ntup_to_h5.py --config ntup_to_h5_config.yaml
+```
+adapt using scripts in ntup_to_h5 folder here
+- comment out irrelevant/unavailable variables and change paths in `ntup_to_h5_config.yaml`
+- note the invalid cells/tracks are padded with np.nan according to the last variable in the corresponding list (to avoid padding the valid ones as well)
