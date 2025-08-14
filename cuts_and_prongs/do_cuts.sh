@@ -1,0 +1,13 @@
+python cuts_and_prongs.py -p 0 -s 'Signal'
+python cuts_and_prongs.py -p 1 -s 'Signal'
+python cuts_and_prongs.py -p m -s 'Signal'
+python cuts_and_prongs.py -p 0 -s 'Background'
+python cuts_and_prongs.py -p 1 -s 'Background'
+python cuts_and_prongs.py -p m -s 'Background'
+
+python cuts_and_prongs-phase2.py -p 0 -s 'Signal'
+python cuts_and_prongs-phase2.py -p 1 -s 'Signal'
+python cuts_and_prongs-phase2.py -p m -s 'Signal'
+python cuts_and_prongs-phase2.py -p 0 -s 'Background'
+python cuts_and_prongs-phase2.py -p 1 -s 'Background'
+python cuts_and_prongs-phase2.py -p m -s 'Background'
