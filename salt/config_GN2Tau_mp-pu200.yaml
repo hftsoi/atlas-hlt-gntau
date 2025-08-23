@@ -1,0 +1,409 @@
+# lightning.pytorch==2.2.0
+seed_everything: 42
+name: GNTau_SC2_HP0
+force: true
+tag: false
+compile: false
+ckpt_path: null
+
+# lightning/pytorch/trainer/trainer.py arguments
+trainer:
+  accelerator: gpu
+  strategy: auto
+  devices: 1
+  num_nodes: 1
+  precision: null
+  fast_dev_run: false
+  max_epochs: 50
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: null
+  log_every_n_steps: 50
+  enable_checkpointing: True
+  enable_progress_bar: True
+  enable_model_summary: True
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/mp
+
+  #########################
+  logger:
+    class_path: lightning.pytorch.loggers.CometLogger
+    init_args:
+      api_key: FGvbEntLNpty9gbPCTt6YwBq7
+      project_name: multi-prong
+      rest_api_key: null
+      experiment_key: null
+      offline: false
+      prefix: ''
+      workspace: hofung
+      log_code: true
+      log_graph: true
+      auto_param_logging: true
+      auto_metric_logging: true
+      parse_args: true
+      auto_output_logging: default
+      log_env_details: true
+      log_git_metadata: true
+      log_git_patch: true
+      disabled: false
+      log_env_gpu: true
+      log_env_host: true
+      display_summary: null
+      log_env_cpu: true
+      log_env_network: true
+      log_env_disk: true
+      display_summary_level: 0
+      auto_weight_logging: null
+      auto_metric_step_rate: 10
+      auto_histogram_tensorboard_logging: false
+      auto_histogram_epoch_rate: 1
+      auto_histogram_weight_logging: false
+      auto_histogram_gradient_logging: false
+      auto_histogram_activation_logging: false
+  #########################
+
+  callbacks:
+  - class_path: salt.callbacks.Checkpoint
+    init_args:
+      monitor_loss: val_jets_classification_loss
+      fname_string: val_loss
+
+  - class_path: salt.callbacks.PredictionWriter
+    init_args:
+      write_tracks: false
+      write_objects: false
+      half_precision: false
+      object_classes: null
+      extra_vars: null
+
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: null
+      log_momentum: false
+      log_weight_decay: false
+
+  - class_path: lightning.pytorch.callbacks.TQDMProgressBar
+    init_args:
+      refresh_rate: 50
+      process_position: 0
+
+  - class_path: lightning.pytorch.callbacks.ModelSummary
+    init_args:
+      max_depth: 2
+
+ 
+###############################################################################################
+
+model:
+  model:
+    class_path: salt.models.SaltModel
+    init_args:
+      init_nets:
+      - input_name: tracks
+        dense_config:
+          output_size: 128
+          hidden_layers:
+          - 64
+          - 128
+          activation: SiLU
+        variables:
+          jets:
+          - TauJets.pt 
+          - TauJets.centFrac 
+          - TauJets.EMPOverTrkSysP # not for 0p
+          - TauJets.ptRatioEflowApprox 
+          - TauJets.dRmax # not for 0 p
+          - TauJets.mEflowApprox 
+          - TauJets.SumPtTrkFrac 
+          - TauJets.etOverPtLeadTrk # not for 0 p
+          - TauJets.massTrkSys 
+          - TauJets.isolFrac
+          - TauJets.trFlightPathSig # not for 0p and 1p
+          # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
+          - TauJets.innerTrkAvgDist # not for 0 p
+
+          tracks:
+          - TauTracks.pt
+          - TauTracks.dEta
+          - TauTracks.dPhi
+          - TauTracks.d0TJVA
+          - TauTracks.d0SigTJVA
+          - TauTracks.z0sinthetaTJVA
+          - TauTracks.z0sinthetaSigTJVA
+          - TauTracks.nPixelHits
+          - TauTracks.nSCTHits
+          - TauTracks.nInnermostPixelHits
+          # - TauTracks.nIBLHitsAndExp
+          # - TauTracks.expectInnermostPixelLayerHit
+          # - TauTracks.nPixelHitsPlusDeadSensors
+          # - TauTracks.nSCTHitsPlusDeadSensors
+
+          cells:
+          - TauClusters.et
+          - TauClusters.dPhi
+          - TauClusters.dEta
+          - TauClusters.SECOND_R
+          - TauClusters.SECOND_LAMBDA
+          - TauClusters.CENTER_LAMBDA
+          # - TauClusters.e
+          # - TauClusters.FIRST_ENG_DENS
+          # - TauClusters.EM_PROBABILITY
+          # - TauClusters.CENTER_MAG
+        global_object: jets
+
+      - input_name: cells
+        dense_config:
+          output_size: 128
+          hidden_layers:
+          - 64
+          - 128
+          activation: SiLU
+        variables:
+          jets:
+          - TauJets.pt 
+          - TauJets.centFrac 
+          - TauJets.EMPOverTrkSysP # not for 0p
+          - TauJets.ptRatioEflowApprox 
+          - TauJets.dRmax # not for 0 p
+          - TauJets.mEflowApprox 
+          - TauJets.SumPtTrkFrac 
+          - TauJets.etOverPtLeadTrk # not for 0 p
+          - TauJets.massTrkSys 
+          - TauJets.isolFrac
+          - TauJets.trFlightPathSig # not for 0p and 1p
+          # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
+          - TauJets.innerTrkAvgDist # not for 0 p
+
+          tracks:
+          - TauTracks.pt
+          - TauTracks.dEta
+          - TauTracks.dPhi
+          - TauTracks.d0TJVA
+          - TauTracks.d0SigTJVA
+          - TauTracks.z0sinthetaTJVA
+          - TauTracks.z0sinthetaSigTJVA
+          - TauTracks.nPixelHits
+          - TauTracks.nSCTHits
+          - TauTracks.nInnermostPixelHits
+          # - TauTracks.nIBLHitsAndExp
+          # - TauTracks.expectInnermostPixelLayerHit
+          # - TauTracks.nPixelHitsPlusDeadSensors
+          # - TauTracks.nSCTHitsPlusDeadSensors
+          cells:
+          - TauClusters.et
+          - TauClusters.dPhi
+          - TauClusters.dEta
+          - TauClusters.SECOND_R
+          - TauClusters.SECOND_LAMBDA
+          - TauClusters.CENTER_LAMBDA
+          # - TauClusters.e
+          # - TauClusters.FIRST_ENG_DENS
+          # - TauClusters.EM_PROBABILITY
+          # - TauClusters.CENTER_MAG
+        global_object: jets
+
+      tasks:
+        class_path: torch.nn.ModuleList
+        init_args:
+          modules:
+          - class_path: salt.models.ClassificationTask
+            init_args:
+              label: flavour_label
+              class_names:
+              - bjets # Whichever is defined first in umami config
+              - ujets # Whichever is defined second in umami config
+              label_map: null
+              sample_weight: null
+              use_class_dict: true
+              name: jets_classification
+              input_name: jets
+              dense_config:
+                input_size: 128
+                output_size: 2
+                hidden_layers:
+                - 64
+                - 32
+                activation: SiLU
+                dropout: 0.1
+              loss:
+                class_path: torch.nn.CrossEntropyLoss
+                init_args:
+                  size_average: null
+                  ignore_index: -100
+                  reduce: null
+                  reduction: mean
+                  label_smoothing: 0.0
+              weight: 1.0
+      
+      encoder:
+        class_path: salt.models.TransformerEncoder
+        init_args:
+          embed_dim: 128
+          num_layers: 2
+          mha_config:
+            num_heads: 2
+            attention:
+              class_path: salt.models.ScaledDotProductAttention
+          dense_config:
+            activation: SiLU
+            dropout: 0.1
+          context_dim: 0
+          out_dim: 128
+          edge_embed_dim: 0
+          update_edges: false
+          muP: false
+      mask_decoder: null
+      pool_net:
+        class_path: salt.models.GlobalAttentionPooling
+        init_args:
+          input_size: 128
+      merge_dict: null
+  
+  lrs_config:
+    initial: 1.0e-08
+    max: 0.001
+    end: 1.0e-08
+    pct_start: 0.1
+    weight_decay: 1.0e-05
+  
+  norm_config:
+    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+    variables:
+      jets:
+      - TauJets.pt 
+      - TauJets.centFrac 
+      - TauJets.EMPOverTrkSysP # not for 0p
+      - TauJets.ptRatioEflowApprox 
+      - TauJets.dRmax # not for 0 p
+      - TauJets.trFlightPathSig # not for 0p and 1p
+      - TauJets.mEflowApprox 
+      - TauJets.SumPtTrkFrac 
+      - TauJets.massTrkSys
+      - TauJets.etOverPtLeadTrk # not for 0 p
+      # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
+      - TauJets.innerTrkAvgDist # not for 0 p
+      - TauJets.isolFrac
+
+      tracks:
+      - TauTracks.pt
+      - TauTracks.dEta
+      - TauTracks.dPhi
+      - TauTracks.d0TJVA
+      - TauTracks.d0SigTJVA
+      - TauTracks.z0sinthetaTJVA
+      - TauTracks.z0sinthetaSigTJVA
+      - TauTracks.nPixelHits
+      - TauTracks.nSCTHits
+      - TauTracks.nInnermostPixelHits
+      # - TauTracks.nIBLHitsAndExp
+      # - TauTracks.expectInnermostPixelLayerHit
+      # - TauTracks.nPixelHitsPlusDeadSensors
+      # - TauTracks.nSCTHitsPlusDeadSensors
+
+      cells:
+      - TauClusters.et
+      - TauClusters.dPhi
+      - TauClusters.dEta
+      - TauClusters.SECOND_R
+      - TauClusters.SECOND_LAMBDA
+      - TauClusters.CENTER_LAMBDA
+      # - TauClusters.FIRST_ENG_DENS
+      # - TauClusters.EM_PROBABILITY
+      # - TauClusters.CENTER_MAG
+      # - TauClusters.e
+    global_object: jets
+    input_map: null
+  muP_config: null
+
+###########################################################################################
+
+data:
+  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_train.h5
+  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_val.h5
+  batch_size: 3500
+  num_workers: 12
+  num_train: -1
+  num_val: -1
+  num_test: -1
+  move_files_temp: null
+  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/class_dict.yaml
+  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_test.h5
+  test_suff: null
+  pin_memory: True
+  config_S3: null
+  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+  variables:
+    jets:
+    - TauJets.pt 
+    - TauJets.centFrac 
+    - TauJets.EMPOverTrkSysP # not for 0p
+    - TauJets.ptRatioEflowApprox 
+    - TauJets.dRmax # not for 0 p
+    - TauJets.trFlightPathSig # not for 0p and 1p
+    - TauJets.mEflowApprox 
+    - TauJets.SumPtTrkFrac 
+    - TauJets.massTrkSys
+    - TauJets.etOverPtLeadTrk # not for 0 p
+    # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
+    - TauJets.innerTrkAvgDist # not for 0 p
+    - TauJets.isolFrac
+    
+    tracks:
+    - TauTracks.pt
+    - TauTracks.dEta
+    - TauTracks.dPhi
+    - TauTracks.d0TJVA
+    - TauTracks.d0SigTJVA
+    - TauTracks.z0sinthetaTJVA
+    - TauTracks.z0sinthetaSigTJVA
+    - TauTracks.nPixelHits
+    - TauTracks.nSCTHits
+    - TauTracks.nInnermostPixelHits
+    # - TauTracks.nIBLHitsAndExp
+    # - TauTracks.expectInnermostPixelLayerHit
+    # - TauTracks.nPixelHitsPlusDeadSensors
+    # - TauTracks.nSCTHitsPlusDeadSensors
+
+    cells:
+    - TauClusters.et
+    - TauClusters.dPhi
+    - TauClusters.dEta
+    - TauClusters.SECOND_R
+    - TauClusters.SECOND_LAMBDA
+    - TauClusters.CENTER_LAMBDA
+    # - TauClusters.FIRST_ENG_DENS
+    # - TauClusters.EM_PROBABILITY
+    # - TauClusters.CENTER_MAG
+    # - TauClusters.e
+  labels:
+    jets:
+    - flavour_label
+  mf_config: null
+  input_map: null
+  num_inputs: 
+    tracks: 20
+    cells: 16
+  non_finite_to_num: false
+  global_object: jets
+  PARAMETERS: null
