@@ -1,0 +1,66 @@
+jets:
+  inputs:
+    - TauJets.IsHadronicTau
+    #- TauJets.truthOriginPdgId
+    - TauJets.Sample
+    - TauJets.pt 
+    - TauJets.eta 
+    - TauJets.RNNJetScore
+    - TauJets.RNNJetScoreSigTrans    
+    - TauJets.Offline_RNNJetScore
+    - TauJets.Offline_RNNJetScoreSigTrans
+    - TauJets.nVtxPU
+    - TauJets.centFrac 
+    - TauJets.isolFrac
+    - TauJets.EMPOverTrkSysP # not for 0p
+    - TauJets.innerTrkAvgDist # not for 0 p
+    - TauJets.ptRatioEflowApprox 
+    - TauJets.dRmax # not for 0 p
+    - TauJets.trFlightPathSig # not for 0p and 1p
+    - TauJets.mEflowApprox 
+    - TauJets.SumPtTrkFrac 
+    # - TauJets.absipSigLeadTrk # not for 0 p   # This is disabled after deepsets
+    - TauJets.massTrkSys 
+    - TauJets.etOverPtLeadTrk # not for 0 p
+
+  labels:
+    - HadronConeExclTruthLabelID
+    - TauJets.pt
+    - TauJets.eta
+  
+tracks:
+  inputs:
+    - TauTracks.pt
+    - TauTracks.eta
+    - TauTracks.phi
+    - TauTracks.nInnermostPixelHits
+    - TauTracks.expectInnermostPixelLayerHit
+    - TauTracks.nPixelHits
+    - TauTracks.nPixelHitsPlusDeadSensors
+    - TauTracks.nSCTHits
+    - TauTracks.nSCTHitsPlusDeadSensors
+    - TauTracks.nIBLHitsAndExp
+    - TauTracks.z0sinthetaSigTJVA
+    - TauTracks.z0sinthetaTJVA
+    - TauTracks.d0SigTJVA
+    - TauTracks.d0TJVA
+    - TauTracks.dEta
+    - TauTracks.dPhi
+    #- TauTracks.chargedScoreRNN
+    #- TauTracks.isolationScoreRNN
+    #- TauTracks.conversionScoreRNN
+    #- TauTracks.fakeScoreRNN
+
+
+cells:
+  inputs:
+    - TauClusters.e
+    - TauClusters.et
+    - TauClusters.dPhi
+    - TauClusters.dEta
+    - TauClusters.SECOND_R
+    - TauClusters.SECOND_LAMBDA
+    - TauClusters.FIRST_ENG_DENS
+    - TauClusters.EM_PROBABILITY
+    - TauClusters.CENTER_MAG
+    - TauClusters.CENTER_LAMBDA

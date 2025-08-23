@@ -1,0 +1,74 @@
+variables: !include /Users/hofungtsoi/Desktop/gntau-train/online-tau-id/Preparing_samples/umami/config/tau-variables_1p.yaml
+signal: &signal
+  name: signal
+  equal_jets: False
+  pattern: 
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/gammatautau/gammatautau*.h5"
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/ttbar/ttbar*.h5"
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/Ztautau_Sherpa/Ztautau_Sherpa*.h5"
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/Ztautau_PyPh/Ztautau_PyPh*.h5"
+
+background: &background
+  name: background
+  equal_jets: False
+  pattern: 
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Background/dijet/dijet*.h5"
+    # - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Background/ttbar/ttbar*.h5"
+
+global_cuts:
+  train:
+    - [TauJets.mcEventNumber, "%9<=", 6]
+  val:
+    - [TauJets.mcEventNumber, "%9==", 7]
+  test:
+    - [TauJets.mcEventNumber, "%9==", 8]
+
+inclusive: &inclusive
+  name: inclusive
+  cuts:
+    - [TauJets.pt,'>=', 0]
+    - [TauJets.pt,'<=', 500_000]
+
+components:
+  - region:
+      <<: *inclusive
+    sample:
+      <<: *signal
+    flavours: [bjets]
+    num_jets: 1000000
+    num_jets_val: 500000
+    num_jets_test: 500000
+
+  - region:
+      <<: *inclusive
+    sample:
+      <<: *background
+    flavours: [ujets]
+    num_jets: 1000000
+    num_jets_val: 500000
+    num_jets_test: 500000
+
+
+resampling:
+  target: bjets
+  method: pdf # countup/pdf for train split
+  sampling_fraction: 1.0
+  variables:
+    TauJets.pt:
+      bins: [[0,440000, 30]]
+    TauJets.eta:
+      bins: [[-2.5, 2.5, 41]]
+
+
+# note: sensible defaults are defined in the PreprocessingConfig constructor
+global:
+  jets_name: jets
+  batch_size: 1_000_000
+  num_jets_estimate: 20_000_000
+
+  base_dir: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/1p/
+  
+  ntuple_dir: 1p
+  out_dir: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/1p/1p/
+  
+  merge_test_samples: True
