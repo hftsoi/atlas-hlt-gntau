@@ -49,6 +49,7 @@
 
 <details>
   <summary>truth labeling and splits</summary>
+  
   apply selection cuts, split into signal tau jets and background jets with different prongness, source repo at https://gitlab.cern.ch/asudhaka/online-tau-id
   ```
   python cuts_and_prongs.py -p [0,1,m] -s ['Signal','Background']
@@ -59,6 +60,7 @@
 
 <details>
   <summary>umami preprocessing</summary>
+  
   resample jets so the kinematic distributions like pt and eta match between signal and bkg (remove bias from input jet pt and eta), then split into train/val/test, source repo at https://umami-hep.github.io/umami-preprocessing/run/
   ```
   # pip install umami-preprocessing
@@ -75,6 +77,7 @@
 
 <details>
   <summary>salt training</summary>
+  
   define salt model and train, source repo at https://ftag-salt.docs.cern.ch/
   ```
   # pip install salt-ml
