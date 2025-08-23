@@ -38,10 +38,23 @@ adapt using scripts in ntup_to_h5 folder here
 - comment out irrelevant/unavailable variables and change paths in `ntup_to_h5_config.yaml`
 - note the invalid cells/tracks are padded with np.nan according to the last variable in the corresponding list (to avoid padding the valid ones as well). e.g. `TauTracks.fakeScoreRNN` and etc. should be commented out since these are all nan
 
-## truth labeling and splits, source repo at https://gitlab.cern.ch/asudhaka/online-tau-id
-apply selection cuts, split into signal tau jets and background jets with different prongness
+## truth labeling and splits
+apply selection cuts, split into signal tau jets and background jets with different prongness, source repo at https://gitlab.cern.ch/asudhaka/online-tau-id
 ```
 python cuts_and_prongs.py -p [0,1,m] -s ['Signal','Background']
 ```
 adapt using scripts in cuts_and_prongs folder here
 - selection and input/output paths in `cuts_and_prongs.py`
+
+## umami preprocessing
+resample jets so the kinematic distributions like pt and eta match between signal and bkg (remove bias from input jet pt and eta), then split into train/val/test, source repo at https://umami-hep.github.io/umami-preprocessing/run/
+```
+preprocess --config config.yaml --split all
+```
+adapt using scripts in umami folder here
+- input jet variables in `tau-variables_1p.yaml` etc.
+- resampling and split configs in `config_1p.yaml` etc.
+  - use modulo to do first splitting under `global_cuts`
+  - set final # of jets per set per sig/bkg after resampling under `components`
+  - define binning and method for resampling under `resampling`
+  - set # of jets to do resampling under `global`
