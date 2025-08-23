@@ -49,6 +49,7 @@ adapt using scripts in cuts_and_prongs folder here
 ## umami preprocessing
 resample jets so the kinematic distributions like pt and eta match between signal and bkg (remove bias from input jet pt and eta), then split into train/val/test, source repo at https://umami-hep.github.io/umami-preprocessing/run/
 ```
+# pip install umami-preprocessing
 preprocess --config config.yaml --split all
 ```
 adapt using scripts in umami folder here
@@ -58,3 +59,14 @@ adapt using scripts in umami folder here
   - set final # of jets per set per sig/bkg after resampling under `components`
   - define binning and method for resampling under `resampling`
   - set # of jets to do resampling under `global`
+
+## salt training
+define salt model and train, source repo at https://ftag-salt.docs.cern.ch/
+```
+# pip install salt-ml
+salt fit --config GN2_like_models/config_GN2Tau_1p.yaml --force --data.num_workers=0
+salt test --config mc23c/1p/GNTau_SC4_HP0_20250816-T120141/config.yaml
+```
+adapt using scripts in salt folder here
+- define model and training config in `config_GN2Tau_1p.yaml` etc.
+- create Comet account for logging and monitoring, put the account api key into the yaml file
