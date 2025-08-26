@@ -3,8 +3,8 @@ signal: &signal
   name: signal
   equal_jets: False
   pattern: 
-    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/gammatautau/gammatautau*.h5"
-    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/ttbar/ttbar*.h5"
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/pu200/1p/Signal/gammatautau/gammatautau*.h5"
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/pu200/1p/Signal/ttbar/ttbar*.h5"
     #- "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/Ztautau_Sherpa/Ztautau_Sherpa*.h5"
     #- "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Signal/Ztautau_PyPh/Ztautau_PyPh*.h5"
 
@@ -12,7 +12,7 @@ background: &background
   name: background
   equal_jets: False
   pattern: 
-    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Background/dijet/dijet*.h5"
+    - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/pu200/1p/Background/dijet/dijet*.h5"
     # - "/Users/hofungtsoi/Desktop/gntau-train/H5/selection/mc23c/1p/Background/ttbar/ttbar*.h5"
 
 global_cuts:
@@ -44,7 +44,7 @@ components:
     sample:
       <<: *background
     flavours: [ujets]
-    num_jets: 120000
+    num_jets: 90000
     num_jets_val: 2000
     num_jets_test: 12000
 
@@ -66,9 +66,9 @@ global:
   batch_size: 1000
   num_jets_estimate: 200000
 
-  base_dir: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/1p/
+  base_dir: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/
   
   ntuple_dir: 1p
-  out_dir: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/1p/1p/
+  out_dir: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/
   
   merge_test_samples: True
