@@ -44,7 +44,7 @@ trainer:
   plugins: null
   sync_batchnorm: false
   reload_dataloaders_every_n_epochs: 0
-  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/default/mp
+  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/mc23c/combined/mp
 
   #########################
   logger:
@@ -122,10 +122,10 @@ model:
       init_nets:
       - input_name: tracks
         dense_config:
-          output_size: 128
+          output_size: 256
           hidden_layers:
-          - 64
           - 128
+          - 256
           activation: SiLU
         variables:
           jets:
@@ -142,6 +142,7 @@ model:
           - TauJets.trFlightPathSig # not for 0p and 1p
           # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
           - TauJets.innerTrkAvgDist # not for 0 p
+          - TauJets.nVtxPU
 
           tracks:
           - TauTracks.pt
@@ -174,10 +175,10 @@ model:
 
       - input_name: cells
         dense_config:
-          output_size: 128
+          output_size: 256
           hidden_layers:
-          - 64
           - 128
+          - 256
           activation: SiLU
         variables:
           jets:
@@ -194,6 +195,7 @@ model:
           - TauJets.trFlightPathSig # not for 0p and 1p
           # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
           - TauJets.innerTrkAvgDist # not for 0 p
+          - TauJets.nVtxPU
 
           tracks:
           - TauTracks.pt
@@ -239,13 +241,13 @@ model:
               name: jets_classification
               input_name: jets
               dense_config:
-                input_size: 128
+                input_size: 256
                 output_size: 2
                 hidden_layers:
+                - 128
                 - 64
-                - 32
                 activation: SiLU
-                dropout: 0.1
+                dropout: 0.2
               loss:
                 class_path: torch.nn.CrossEntropyLoss
                 init_args:
@@ -259,17 +261,17 @@ model:
       encoder:
         class_path: salt.models.TransformerEncoder
         init_args:
-          embed_dim: 128
-          num_layers: 2
+          embed_dim: 256
+          num_layers: 4
           mha_config:
-            num_heads: 2
+            num_heads: 4
             attention:
               class_path: salt.models.ScaledDotProductAttention
           dense_config:
             activation: SiLU
-            dropout: 0.1
+            dropout: 0.2
           context_dim: 0
-          out_dim: 128
+          out_dim: 256
           edge_embed_dim: 0
           update_edges: false
           muP: false
@@ -277,7 +279,7 @@ model:
       pool_net:
         class_path: salt.models.GlobalAttentionPooling
         init_args:
-          input_size: 128
+          input_size: 256
       merge_dict: null
   
   lrs_config:
@@ -288,7 +290,7 @@ model:
     weight_decay: 1.0e-05
   
   norm_config:
-    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/norm_dict.yaml
     variables:
       jets:
       - TauJets.pt 
@@ -304,6 +306,7 @@ model:
       # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
       - TauJets.innerTrkAvgDist # not for 0 p
       - TauJets.isolFrac
+      - TauJets.nVtxPU
 
       tracks:
       - TauTracks.pt
@@ -339,20 +342,20 @@ model:
 ###########################################################################################
 
 data:
-  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_train.h5
-  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_val.h5
+  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/pp_output_train.h5
+  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/pp_output_val.h5
   batch_size: 3500
   num_workers: 12
   num_train: -1
   num_val: -1
   num_test: -1
   move_files_temp: null
-  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/class_dict.yaml
-  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_test.h5
+  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/class_dict.yaml
+  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/pp_output_test.h5
   test_suff: null
   pin_memory: True
   config_S3: null
-  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/norm_dict.yaml
   variables:
     jets:
     - TauJets.pt 
@@ -368,6 +371,7 @@ data:
     # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
     - TauJets.innerTrkAvgDist # not for 0 p
     - TauJets.isolFrac
+    - TauJets.nVtxPU
     
     tracks:
     - TauTracks.pt
@@ -402,8 +406,8 @@ data:
   mf_config: null
   input_map: null
   num_inputs: 
-    tracks: 10
-    cells: 8
+    tracks: 20
+    cells: 16
   non_finite_to_num: false
   global_object: jets
   PARAMETERS: null

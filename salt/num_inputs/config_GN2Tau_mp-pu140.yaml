@@ -44,7 +44,7 @@ trainer:
   plugins: null
   sync_batchnorm: false
   reload_dataloaders_every_n_epochs: 0
-  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/default/mp
+  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu140/num_inputs/mp
 
   #########################
   logger:
@@ -288,7 +288,7 @@ model:
     weight_decay: 1.0e-05
   
   norm_config:
-    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu140/mp/mp/norm_dict.yaml
     variables:
       jets:
       - TauJets.pt 
@@ -339,20 +339,20 @@ model:
 ###########################################################################################
 
 data:
-  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_train.h5
-  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_val.h5
+  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu140/mp/mp/pp_output_train.h5
+  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu140/mp/mp/pp_output_val.h5
   batch_size: 3500
   num_workers: 12
   num_train: -1
   num_val: -1
   num_test: -1
   move_files_temp: null
-  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/class_dict.yaml
-  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_test.h5
+  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu140/mp/mp/class_dict.yaml
+  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu140/mp/mp/pp_output_test.h5
   test_suff: null
   pin_memory: True
   config_S3: null
-  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu140/mp/mp/norm_dict.yaml
   variables:
     jets:
     - TauJets.pt 
@@ -401,9 +401,9 @@ data:
     - flavour_label
   mf_config: null
   input_map: null
-  num_inputs: 
-    tracks: 10
-    cells: 8
+  num_inputs:
+    tracks: 20
+    cells: 16
   non_finite_to_num: false
   global_object: jets
   PARAMETERS: null

@@ -44,7 +44,7 @@ trainer:
   plugins: null
   sync_batchnorm: false
   reload_dataloaders_every_n_epochs: 0
-  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/1p
+  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/default/1p
 
   #########################
   logger:
@@ -403,7 +403,7 @@ data:
   mf_config: null
   input_map: null
   num_inputs: 
-    tracks: 20
-    cells: 16
+    tracks: 10
+    cells: 8
   global_object: jets
   PARAMETERS: null

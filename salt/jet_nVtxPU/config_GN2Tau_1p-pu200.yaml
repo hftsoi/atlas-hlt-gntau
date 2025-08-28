@@ -1,6 +1,6 @@
 # lightning.pytorch==2.2.0
 seed_everything: 42
-name: GNTau_SC2_HP0
+name: GNTau_SC4_HP0
 force: true
 tag: false
 compile: false
@@ -44,14 +44,14 @@ trainer:
   plugins: null
   sync_batchnorm: false
   reload_dataloaders_every_n_epochs: 0
-  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/default/mp
+  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/jet_nVtxPU/1p
 
   #########################
   logger:
     class_path: lightning.pytorch.loggers.CometLogger
     init_args:
       api_key: FGvbEntLNpty9gbPCTt6YwBq7
-      project_name: multi-prong
+      project_name: 1-prong
       rest_api_key: null
       experiment_key: null
       offline: false
@@ -112,7 +112,7 @@ trainer:
     init_args:
       max_depth: 2
 
- 
+
 ###############################################################################################
 
 model:
@@ -139,9 +139,10 @@ model:
           - TauJets.etOverPtLeadTrk # not for 0 p
           - TauJets.massTrkSys 
           - TauJets.isolFrac
-          - TauJets.trFlightPathSig # not for 0p and 1p
+          # - TauJets.trFlightPathSig # not for 0p and 1p
           # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
           - TauJets.innerTrkAvgDist # not for 0 p
+          - TauJets.nVtxPU
 
           tracks:
           - TauTracks.pt
@@ -191,9 +192,10 @@ model:
           - TauJets.etOverPtLeadTrk # not for 0 p
           - TauJets.massTrkSys 
           - TauJets.isolFrac
-          - TauJets.trFlightPathSig # not for 0p and 1p
+          # - TauJets.trFlightPathSig # not for 0p and 1p
           # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
           - TauJets.innerTrkAvgDist # not for 0 p
+          - TauJets.nVtxPU
 
           tracks:
           - TauTracks.pt
@@ -288,7 +290,7 @@ model:
     weight_decay: 1.0e-05
   
   norm_config:
-    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/norm_dict.yaml
     variables:
       jets:
       - TauJets.pt 
@@ -296,15 +298,16 @@ model:
       - TauJets.EMPOverTrkSysP # not for 0p
       - TauJets.ptRatioEflowApprox 
       - TauJets.dRmax # not for 0 p
-      - TauJets.trFlightPathSig # not for 0p and 1p
       - TauJets.mEflowApprox 
       - TauJets.SumPtTrkFrac 
-      - TauJets.massTrkSys
       - TauJets.etOverPtLeadTrk # not for 0 p
+      - TauJets.massTrkSys 
+      - TauJets.isolFrac
+      # - TauJets.trFlightPathSig # not for 0p and 1p
       # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
       - TauJets.innerTrkAvgDist # not for 0 p
-      - TauJets.isolFrac
-
+      - TauJets.nVtxPU
+      
       tracks:
       - TauTracks.pt
       - TauTracks.dEta
@@ -320,7 +323,6 @@ model:
       # - TauTracks.expectInnermostPixelLayerHit
       # - TauTracks.nPixelHitsPlusDeadSensors
       # - TauTracks.nSCTHitsPlusDeadSensors
-
       cells:
       - TauClusters.et
       - TauClusters.dPhi
@@ -328,10 +330,11 @@ model:
       - TauClusters.SECOND_R
       - TauClusters.SECOND_LAMBDA
       - TauClusters.CENTER_LAMBDA
+      # - TauClusters.e
       # - TauClusters.FIRST_ENG_DENS
       # - TauClusters.EM_PROBABILITY
       # - TauClusters.CENTER_MAG
-      # - TauClusters.e
+
     global_object: jets
     input_map: null
   muP_config: null
@@ -339,20 +342,21 @@ model:
 ###########################################################################################
 
 data:
-  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_train.h5
-  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_val.h5
+  non_finite_to_num: false
+  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/pp_output_train.h5
+  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/pp_output_val.h5
   batch_size: 3500
   num_workers: 12
   num_train: -1
   num_val: -1
   num_test: -1
   move_files_temp: null
-  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/class_dict.yaml
-  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_test.h5
+  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/class_dict.yaml
+  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/pp_output_test.h5
   test_suff: null
   pin_memory: True
   config_S3: null
-  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/1p/1p/norm_dict.yaml
   variables:
     jets:
     - TauJets.pt 
@@ -360,15 +364,16 @@ data:
     - TauJets.EMPOverTrkSysP # not for 0p
     - TauJets.ptRatioEflowApprox 
     - TauJets.dRmax # not for 0 p
-    - TauJets.trFlightPathSig # not for 0p and 1p
     - TauJets.mEflowApprox 
     - TauJets.SumPtTrkFrac 
-    - TauJets.massTrkSys
     - TauJets.etOverPtLeadTrk # not for 0 p
+    - TauJets.massTrkSys 
+    - TauJets.isolFrac
+    # - TauJets.trFlightPathSig # not for 0p and 1p
     # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
     - TauJets.innerTrkAvgDist # not for 0 p
-    - TauJets.isolFrac
-    
+    - TauJets.nVtxPU
+
     tracks:
     - TauTracks.pt
     - TauTracks.dEta
@@ -384,7 +389,6 @@ data:
     # - TauTracks.expectInnermostPixelLayerHit
     # - TauTracks.nPixelHitsPlusDeadSensors
     # - TauTracks.nSCTHitsPlusDeadSensors
-
     cells:
     - TauClusters.et
     - TauClusters.dPhi
@@ -392,10 +396,11 @@ data:
     - TauClusters.SECOND_R
     - TauClusters.SECOND_LAMBDA
     - TauClusters.CENTER_LAMBDA
+    # - TauClusters.e
     # - TauClusters.FIRST_ENG_DENS
     # - TauClusters.EM_PROBABILITY
     # - TauClusters.CENTER_MAG
-    # - TauClusters.e
+
   labels:
     jets:
     - flavour_label
@@ -404,6 +409,5 @@ data:
   num_inputs: 
     tracks: 10
     cells: 8
-  non_finite_to_num: false
   global_object: jets
   PARAMETERS: null

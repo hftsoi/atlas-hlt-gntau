@@ -44,7 +44,7 @@ trainer:
   plugins: null
   sync_batchnorm: false
   reload_dataloaders_every_n_epochs: 0
-  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/pu200/default/mp
+  default_root_dir: /Users/hofungtsoi/Desktop/gntau-train/salt_outputs/mc23c/jet_nVtxPU/mp
 
   #########################
   logger:
@@ -142,6 +142,7 @@ model:
           - TauJets.trFlightPathSig # not for 0p and 1p
           # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
           - TauJets.innerTrkAvgDist # not for 0 p
+          - TauJets.nVtxPU
 
           tracks:
           - TauTracks.pt
@@ -194,6 +195,7 @@ model:
           - TauJets.trFlightPathSig # not for 0p and 1p
           # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
           - TauJets.innerTrkAvgDist # not for 0 p
+          - TauJets.nVtxPU
 
           tracks:
           - TauTracks.pt
@@ -288,7 +290,7 @@ model:
     weight_decay: 1.0e-05
   
   norm_config:
-    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+    norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/norm_dict.yaml
     variables:
       jets:
       - TauJets.pt 
@@ -304,6 +306,7 @@ model:
       # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
       - TauJets.innerTrkAvgDist # not for 0 p
       - TauJets.isolFrac
+      - TauJets.nVtxPU
 
       tracks:
       - TauTracks.pt
@@ -339,20 +342,20 @@ model:
 ###########################################################################################
 
 data:
-  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_train.h5
-  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_val.h5
+  train_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/pp_output_train.h5
+  val_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/pp_output_val.h5
   batch_size: 3500
   num_workers: 12
   num_train: -1
   num_val: -1
   num_test: -1
   move_files_temp: null
-  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/class_dict.yaml
-  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/pp_output_test.h5
+  class_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/class_dict.yaml
+  test_file: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/pp_output_test.h5
   test_suff: null
   pin_memory: True
   config_S3: null
-  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/pu200/mp/mp/norm_dict.yaml
+  norm_dict: /Users/hofungtsoi/Desktop/gntau-train/H5/umami/mc23c/mp/mp/norm_dict.yaml
   variables:
     jets:
     - TauJets.pt 
@@ -368,6 +371,7 @@ data:
     # - TauJets.absipSigLeadTrk # Disabled since Deepsets # not for 0 p
     - TauJets.innerTrkAvgDist # not for 0 p
     - TauJets.isolFrac
+    - TauJets.nVtxPU
     
     tracks:
     - TauTracks.pt
